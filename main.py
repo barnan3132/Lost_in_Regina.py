@@ -118,4 +118,143 @@ while player.hp > 0:
 						print(f"You now have {player.gold} gold")
 						player.hp = 6
 						battle = False
-						break
+                        
+    elif ans == "n":
+        print(f'you have {player.hp}and{player.gold} gold.')
+        print(f'You walk into town to see whats open')
+        print(f'You see 3 places open:\nbar/CO-Op/Church')
+
+        if village == "tavern":
+            print("The Co-Op is busy. The bartender offers you a beer or a medicine for one gold.")
+            print(f'Do you accept? (Drink/Medicine')
+            print()
+        
+            inn = input().lower()
+        
+            if inn == "medicine":
+                if player.gold < 2:
+                    print("You dont have enough gold!")
+                    print(f'You have{player.gold}')
+            
+                elif player.gold >= 2:
+                    cost = 2
+                    player.gold = player.gold - cost
+                    print("You buy some medicine and it heals you")
+                    print(f'You have{player.gold}')
+                    player.hp = player.maxhp
+
+            if inn == "drink":
+                if player.gold < 1:
+                     print("Not enough gold!")
+                    print(f'You have{player.gold}')
+        
+            elif player.gold >= 1:
+                cost = 1
+                player.gold = player.gold - cost
+                print("you drink a few beers with the bartender till the late hour")
+                print(f'You have{player.gold}')
+                drunken_event = random.randomint(1,100)
+
+                if drunken_event > 10 and drunken_event <= 55:
+                    print("You become hazy and tipsy! Be carful next time!")
+                    rint("You also lost 5 gold!")
+                    print(f'You have{player.gold}')
+
+                elif drunken_event >= 55:
+                    good_bet= random.randint(1,5)
+                    player.gold = player.gold + good_bet
+                    print(f"The night was filled with much beer and many bets!")
+                    print(f'You won {good_bet} in bets tonight!')
+                    print(f'You have{player.gold}')
+            
+                elif drinking_event <= 10:
+                    print(f'While drunk, you walk outside and a deer confronts you!')
+                    enemy_class = Deer()
+                    while enemy.hp > 0 or player.hp > 0:
+                            print("Press A to attack")
+                        user = input().lower()
+
+                        if user != "a" and user != "y":
+                            print("Please enter a valid action")
+                            continue
+
+                        if user == "a":
+                            enemy.hp = enemy.hp - player.dmg
+                            print(f"You dealt {player.dmg} damage to the deer!")
+                    
+                        if enemy.hp <= 0:
+                            print("The deer is slain!")
+                        
+                            loot = random.randint(1,51)
+                            if loot >=35:
+                                print("You found a bandaid on the deer! Lucky!")
+                            else:
+                                gold = random.randint(2, 5)
+                                player.gold = player.gold + gold
+                                print(f"Whats this..? You found {gold} gold on the  corpse!")
+                                print(f'You have{player.gold}')
+                            break
+
+                        if user == "a":
+                            player.hp = player.hp - enemy.dmg
+                            print(f"The deer does {enemy.dmg} damage to you!")
+                    
+                        if player.hp <= 0:
+                            print(f"The Deer knocked you out!\nYou wake up several hours later")
+                            print("and discover that while you were out someone stole your gold...")
+                            player.hp = 5
+                            print(f"You now have {player.gold} gold")
+                            break
+
+    elif village == "coop" :
+        print("The Co-Op is busy with activity")
+        print("You see on your left a clothing stand ")
+        print("On your right you see a weapons stand ")
+        print("Directly ahead is a locks and lockpick stand")
+        print("Would you like to go to the (Clothing/Weapons/Locks)")
+        coop = input().lower()
+        if coop == "clothing":
+            print("Would you like do buy anything?(Y/N)")
+            armor = ["Leather jacket", "Steel plated jacket"]
+				leather_price = 8
+				steel_price = 25
+            if ans == "y":
+					print(f"The smith says he currently has {armor} in stock. Would you care to purchase one?(Y/N)")
+					ans2 = input().lower()
+
+                    if ans2 == "y":
+						print(f"Which armor would you care to buy?")
+                        print(f"The {armor[0]} costs {leather_price} and the {armor[1]} costs {steel_price}.\n{armor[0]} or {armor[1]}")
+
+						ans3 = input().lower()
+
+                        if ans3 =="leather":
+							if player.gold < leather_price:
+								print("You do not have enough gold!")
+							elif player.gold >= leather_price:
+								player.gold = player.gold - leather_price
+								print(f"The cashier sells you the leather jacket")print(f"Your armor level has increased!\nYou now have {player.gold} gold.")
+								player.ac = 1
+								player.armor = "Leather armor"
+
+                        if ans3 =="steel":
+							if player.gold < steel_price:
+								print("You do not have enough gold!")
+								continue
+
+							elif player.gold >= steel_price:
+								player.gold = player.gold - steel_price
+								print(f"The cashier sells you the leather jacket") print(f"Your armor level has increased!\nYou now have {player.gold} gold.")
+								player.ac = 2
+								player.upg = player.upg + 1
+								player.armor = "Steel Plate armor"
+
+                    elif ans =="n":	
+						print("The smith nods and asks you to come back if you change your mind.")
+						continue
+
+				elif ans == "n":
+					print("The cashier nods to leave.")
+					continue
+
+
