@@ -16,10 +16,10 @@ while player.hp > 0:
 	if player.hp > player.maxhp:
 		player.hp = player.maxhp
 
-	print(f'\nWould you like to continue onward, {xyz}? (Y/N)')
-	ans = input().lower()
+print(f'\nWould you like to continue onward, {xyz}? (Y/N)')
+ans = input().lower()
 
-	if ans == "y":
+if ans == "y":
 		encounter = random.randint(1,100)
 		if encounter < 10:
 			locked = True
@@ -35,7 +35,7 @@ while player.hp > 0:
 
 					if player.lockpicks == True:
 						if unlock <= 80:
-							gold = random.randint(2,10)
+							gold = random.randint(2,19)
 							player.gold = player.gold + gold
 							print(f"You opened the barrel! You found {gold} gold inside of it!\nYou now have {player.gold} gold.")
 							locked = False
@@ -119,7 +119,7 @@ while player.hp > 0:
 						player.hp = 6
 						battle = False
                         
-    elif ans == "n":
+elif ans == "n":
         print(f'you have {player.hp}and{player.gold} gold.')
         print(f'You walk into town to see whats open')
         print(f'You see 3 places open:\nbar/CO-Op/Church')
@@ -145,7 +145,7 @@ while player.hp > 0:
 
             if inn == "drink":
                 if player.gold < 1:
-                     print("Not enough gold!")
+                    print("Not enough gold!")
                     print(f'You have{player.gold}')
         
             elif player.gold >= 1:
@@ -171,7 +171,7 @@ while player.hp > 0:
                     print(f'While drunk, you walk outside and a deer confronts you!')
                     enemy_class = Deer()
                     while enemy.hp > 0 or player.hp > 0:
-                            print("Press A to attack")
+                        print("Press A to attack")
                         user = input().lower()
 
                         if user != "a" and user != "y":
@@ -206,55 +206,171 @@ while player.hp > 0:
                             print(f"You now have {player.gold} gold")
                             break
 
-    elif village == "coop" :
-        print("The Co-Op is busy with activity")
-        print("You see on your left a clothing stand ")
-        print("On your right you see a weapons stand ")
-        print("Directly ahead is a locks and lockpick stand")
-        print("Would you like to go to the (Clothing/Weapons/Locks)")
-        coop = input().lower()
-        if coop == "clothing":
-            print("Would you like do buy anything?(Y/N)")
-            armor = ["Leather jacket", "Steel plated jacket"]
-				leather_price = 8
-				steel_price = 25
-            if ans == "y":
-					print(f"The smith says he currently has {armor} in stock. Would you care to purchase one?(Y/N)")
-					ans2 = input().lower()
+        elif village == "coop":
+            print("The Co-Op is busy with activity")
+            print("You see on your left a clothing stand ")
+            print("On your right you see a weapons stand ")
+            print("Directly ahead is a locks and lockpick stand")
+            print("Would you like to go to the (Clothing/Weapons/Locks)")
+            coop = input().lower()
+
+            if coop == "clothing":
+                print("Would you like do buy anything?(Y/N)")
+                armor = ["Leather jacket", "Steel plated jacket"]
+                leather_price = 8
+                steel_price = 25
+                if ans == "y":
+                    print(f"The smith says he currently has {armor} in stock. Would you care to purchase one?(Y/N)")
+                    ans2 = input().lower()
 
                     if ans2 == "y":
-						print(f"Which armor would you care to buy?")
+                        print(f"Which armor would you care to buy?")
                         print(f"The {armor[0]} costs {leather_price} and the {armor[1]} costs {steel_price}.\n{armor[0]} or {armor[1]}")
-
-						ans3 = input().lower()
+                        
+                        ans3 = input().lower()
 
                         if ans3 =="leather":
-							if player.gold < leather_price:
-								print("You do not have enough gold!")
-							elif player.gold >= leather_price:
-								player.gold = player.gold - leather_price
-								print(f"The cashier sells you the leather jacket")print(f"Your armor level has increased!\nYou now have {player.gold} gold.")
-								player.ac = 1
-								player.armor = "Leather armor"
+                            if player.gold < leather_price:
+                                print("You do not have enough gold!")
+                            elif player.gold >= leather_price:
+                                player.gold = player.gold - leather_price
+                                print(f"The cashier sells you the leather jacket")
+                                print(f"Your armor level has increased!\nYou now have {player.gold} gold.")
+                                player.ac = 1
+                                player.armor = "Leather armor"
 
                         if ans3 =="steel":
-							if player.gold < steel_price:
-								print("You do not have enough gold!")
-								continue
-
-							elif player.gold >= steel_price:
-								player.gold = player.gold - steel_price
-								print(f"The cashier sells you the leather jacket") print(f"Your armor level has increased!\nYou now have {player.gold} gold.")
-								player.ac = 2
-								player.upg = player.upg + 1
-								player.armor = "Steel Plate armor"
+                            if player.gold < steel_price:
+                                print("You do not have enough gold!")
+                                continue
+                                
+                            elif player.gold >= steel_price:
+                                player.gold = player.gold - steel_price
+                                print(f"The cashier sells you the leather jacket")
+                                print(f"Your armor level has increased!\nYou now have {player.gold} gold.")
+                                player.ac = 2
+                                player.upg = player.upg + 1
+                                player.armor = "Steel Plate armor"
 
                     elif ans =="n":	
-						print("The smith nods and asks you to come back if you change your mind.")
-						continue
+                        print("The Cashier nods and asks you to come back if you change your mind.")
+                        continue
+                        
+                elif ans == "n":
+                    print("The cashier nods to leave.")
+                    continue
 
-				elif ans == "n":
-					print("The cashier nods to leave.")
-					continue
+        if coop == "weapons":
+            
+            if player.upg == 0:
+                cost = 10
+                print(f"The blacksmith agrees to upgrade your dagger for {cost} gold.")
+                print(f"You have {player.gold} gold.")
+                print(f" Do you want him to upgrade your dagger? (Y/N)")
+                upgrade = input().lower()
+                
+                if upgrade == "y":
+                    if player.gold < cost:
+                        print("You do not have enough gold!")
+                        continue
+                        
+                    elif player.gold >= cost:
+                        player.gold = player.gold - cost
+                        print("The blacksmith upgraded your dagger.")
+                        print("You now do more damage per hit!")
+                        player.dmg = player.dmg + 2
+                        player.upg = player.upg + 1
+                    elif upgrade == "n":
+                        continue
+                        
+                    elif player.upg == 1:
+                        cost = 25
+                        
+                        print(f"The blacksmith agrees to upgrade your dagger for {cost} gold.")
+                        print(f"You have {player.gold} gold.")
+                    print("Do you want him to upgrade your blade? (Y/N)")
+                    upgrade = input().lower()
+                    if upgrade == "y":
+                        if player.gold < cost:
+                            print("You do not have enough gold!")
+                            continue
+                        elif player.gold >= cost:
+                            player.gold = player.gold - cost
+                            print("The blacksmith upgraded your dagger.")
+                            print(" You now do more damage per hit!")
+                            player.dmg = player.dmg + 2
+                            player.upg = player.upg + 1       
+                    elif upgrade == "n":
+                        continue
+                        
+                
+                elif player.upg == 2:
+                    cost = 50
+                    print(f"The blacksmith agrees to upgrade your dagger for {cost} gold.")
+                    print(f"You have {player.gold} gold.")
+                    print("Do you want him to upgrade your blade? (Y/N)")
+                    upgrade = input().lower()
+                    if upgrade == "y":
+                        if player.gold < cost:
+                            print("You do not have enough gold!")
+                            continue
+                        elif player.gold >= cost:
+                            player.gold = player.gold - cost
+                            print("The blacksmith upgraded your dagger.")
+                            print("You now do more damage per hit!")
+                            player.dmg = player.dmg + 2
+                            player.upg = player.upg + 1
+                            
+                    elif upgrade == "n":
+                        continue
+                        
+                elif player.upg >= 3:
+                    print(f"The cashier tells you that he cannot upgrade your blade any further.")
+                    continue     
+
+        elif coop == "locks":
+            print("The locksmith hastly asks you'd like to buy a set (Y/N)")
+            locks = input().lower()
+
+            if locks == "y":
+                price = 20
+                locks2 = ["lockpicks",]
+                print(f"The merchant tells you he currently has {locks2} in stock.")
+                print(f"They cost {price} gold. Would you like to buy them? (Y/N)")
+                
+                ans = input().lower()
+                
+                if ans =="y":
+                    if player.gold < price:
+                        print("You do not have enough gold!")
+                        continue
+                        
+                    elif player.gold >= price:
+                        player.gold = player.gold - price
+                        player.lockpicks = True
+                        print(f"You bought the {locks2}")
+                        print("You now have {player.gold} gold left")
+                        
+                    elif ans =="n":
+                        print("The merchant yells at you for wasting his time")
+                        continue
+                        
+            elif locks =="n":
+                print("The merchant yells at you angrily for wasting his time, and demands you leave him be.")
+                continue
+                
+        else:
+            print("Please enter a valid action")
+            continue
 
 
+elif village == "church":
+        if player.hp < 10:
+            print("You have been healed!")
+            player.hp = player.hp + 10
+            continue
+        else:
+            print("Enter a valid")
+else:
+    print("Please try again!")
+    continue
